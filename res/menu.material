@@ -1,0 +1,83 @@
+material TexturedUnlit
+{
+    u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+    
+    sampler u_diffuseTexture
+    {
+        mipmap = true
+        wrapS = CLAMP
+        wrapT = CLAMP
+        minFilter = LINEAR_MIPMAP_LINEAR
+        magFilter = LINEAR
+    }
+
+    renderState
+    {
+        cullFace = true
+        depthTest = true
+    }
+    
+    technique
+    {
+        pass 
+        {
+            vertexShader = res/shaders/textured-unlit.vert
+            fragmentShader = res/shaders/textured-unlit.frag
+            defines = TEXTURE_DISCARD_ALPHA
+        }
+    }
+}
+material Textured
+{
+    u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+    u_lightColor = SCENE_LIGHT_COLOR
+    u_lightDirection = SCENE_LIGHT_DIRECTION
+    u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+    
+    sampler u_diffuseTexture
+    {
+        mipmap = true
+        wrapS = CLAMP
+        wrapT = CLAMP
+        minFilter = LINEAR_MIPMAP_LINEAR
+        magFilter = LINEAR
+    }
+
+    renderState
+    {
+        cullFace = true
+        depthTest = true
+    }
+    
+    technique
+    {
+        pass 
+        {
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+        }
+    }
+}
+
+material lit__menu_png : Textured
+{
+    sampler u_diffuseTexture
+    {
+        path = menu.png
+        wrapS = REPEAT
+        wrapT = REPEAT
+    }
+
+}
+
+material unlit__menu_png : TexturedUnlit
+{
+    sampler u_diffuseTexture
+    {
+        path = menu.png
+        wrapS = REPEAT
+        wrapT = REPEAT
+    }
+
+}
+

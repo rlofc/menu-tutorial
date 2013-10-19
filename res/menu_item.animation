@@ -1,0 +1,17 @@
+animation animations
+{
+   frameCount = 250
+	clip bounce
+   {
+        begin = 1
+        end = 40
+        speed = 1.0
+    }
+    clip jiggle
+    {
+        begin = 50
+        end = 120
+        repeatCount = INDEFINITE
+        speed = 1.0
+    }
+}

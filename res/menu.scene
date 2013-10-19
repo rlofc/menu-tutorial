@@ -1,0 +1,9 @@
+scene main
+{
+   path = res/menu.gpb
+   activeCamera = Camera
+   physics
+   {
+      gravity = 0.0, -9.8, 0.0
+   }
+}

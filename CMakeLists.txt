@@ -130,6 +130,8 @@ source_group(src FILES ${GAME_SRC})
 set(GAME_SRC
 	src/MenuTutorial.cpp
 	src/MenuTutorial.h
+	src/Menu.cpp
+	src/Menu.h
 )
 
 add_executable(${GAME_NAME}

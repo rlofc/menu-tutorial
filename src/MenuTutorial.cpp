@@ -3,61 +3,36 @@
 // Declare our game instance
 MenuTutorial game;
 
-MenuTutorial::MenuTutorial()
-    : _scene(NULL)
+MenuTutorial::MenuTutorial() : _menu(NULL)
 {
 }
 
 void MenuTutorial::initialize()
 {
-    // Load game scene from file
-    _scene = Scene::load("res/box.gpb");
-
-    // Set the aspect ratio for the scene's camera to match the current resolution
-    _scene->getActiveCamera()->setAspectRatio(getAspectRatio());
-    
-    // Get light node
-    Node* lightNode = _scene->findNode("directionalLight");
-    Light* light = lightNode->getLight();
-
-    // Initialize box model
-    Node* boxNode = _scene->findNode("box");
-    Model* boxModel = boxNode->getModel();
-    Material* boxMaterial = boxModel->setMaterial("res/box.material");
-    boxMaterial->getParameter("u_ambientColor")->setValue(_scene->getAmbientColor());
-    boxMaterial->getParameter("u_lightColor")->setValue(light->getColor());
-    boxMaterial->getParameter("u_lightDirection")->setValue(lightNode->getForwardVectorView());
+   _menu = Menu::create();
 }
 
 void MenuTutorial::finalize()
 {
-    SAFE_RELEASE(_scene);
+   SAFE_DELETE(_menu);
 }
 
 void MenuTutorial::update(float elapsedTime)
 {
-    // Rotate model
-    _scene->findNode("box")->rotateY(MATH_DEG_TO_RAD((float)elapsedTime / 1000.0f * 180.0f));
+   if (_menu)
+   {
+      _menu->update(elapsedTime);
+   }
 }
 
 void MenuTutorial::render(float elapsedTime)
 {
-    // Clear the color and depth buffers
-    clear(CLEAR_COLOR_DEPTH, Vector4::zero(), 1.0f, 0);
+   clear(CLEAR_COLOR_DEPTH, Vector4::zero(), 1.0f, 0);
+   if (_menu)
+   {
+      _menu->render(elapsedTime);
+   }
 
-    // Visit all the nodes in the scene for drawing
-    _scene->visit(this, &MenuTutorial::drawScene);
-}
-
-bool MenuTutorial::drawScene(Node* node)
-{
-    // If the node visited contains a model, draw it
-    Model* model = node->getModel(); 
-    if (model)
-    {
-        model->draw();
-    }
-    return true;
 }
 
 void MenuTutorial::keyEvent(Keyboard::KeyEvent evt, int key)
@@ -75,13 +50,8 @@ void MenuTutorial::keyEvent(Keyboard::KeyEvent evt, int key)
 
 void MenuTutorial::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contactIndex)
 {
-    switch (evt)
-    {
-    case Touch::TOUCH_PRESS:
-        break;
-    case Touch::TOUCH_RELEASE:
-        break;
-    case Touch::TOUCH_MOVE:
-        break;
-    };
+   if (_menu)
+   {
+      _menu->touchEvent(evt,x,y,contactIndex);
+   }
 }

@@ -2,7 +2,7 @@
 #define TEMPLATEGAME_H_
 
 #include "gameplay.h"
-
+#include "Menu.h"
 using namespace gameplay;
 
 /**
@@ -50,13 +50,7 @@ protected:
     void render(float elapsedTime);
 
 private:
-
-    /**
-     * Draws the scene each frame.
-     */
-    bool drawScene(Node* node);
-
-    Scene* _scene;
+   Menu* _menu;
 };
 
 #endif
